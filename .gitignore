@@ -1,0 +1,5 @@
+bOSS_django/bOSS_django/.env
+.idea
+bOSS_django/bOSS_app/migrations
+bOSS_django/bOSS_django/__pycache__
+bOSS_django/bOSS_app/__pycache__
