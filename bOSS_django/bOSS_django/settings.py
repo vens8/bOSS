@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
 import os
 env = environ.Env()
-print("asdfasfasfasdfasfasdfasfasfasdfsf" , BASE_DIR)
 # Read .env file and load its contents into os.environ
 environ.Env.read_env()
 
@@ -34,7 +33,19 @@ DEBUG = env('DEBUG', default=False)
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '.vercel.app'
+]
+
+# allowing hosts for frontend (react) and backend (django)
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://localhost:3306',
+    'https://' + env('HOSTNAME') + ':' + env('BACKEND_PORT'),
+    'https://' + env('HOSTNAME') + ':' + env('FRONTEND_PORT')
+]
 
 
 # Application definition
@@ -50,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -130,6 +142,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR/'static',]
+STATIC_ROOT = BASE_DIR/'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
